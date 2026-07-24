@@ -1,0 +1,23 @@
+# 平台全局设置
+
+logging:
+  level: INFO
+  log_dir: logs
+  max_file_size_mb: 10
+  backup_count: 5
+
+reporting:
+  output_dir: reports
+  formats: [json, csv, html]
+  auto_open_html: false
+
+test:
+  default_retry: 3
+  retry_delay_sec: 1.0
+  measurement_timeout_sec: 30
+  parallel_channels: false  # 是否并行读取通道（如果仪器支持）
+
+station:
+  name: "PowerSupply Auto Test Station"
+  location: "Lab-01"
+  operator: ""

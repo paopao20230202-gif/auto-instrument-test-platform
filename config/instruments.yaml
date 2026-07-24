@@ -1,0 +1,25 @@
+# 仪器配置文件
+# 支持真实仪器和仿真模式
+
+instruments:
+  power_supply:
+    type: power_supply
+    # 真实仪器资源字符串（来自你的原始代码）
+    resource: "TCPIP0::192.168.200.100::inst0::INSTR"
+    # 仿真模式下的资源（使用pyvisa-sim）
+    sim_resource: "ASRL1::INSTR"
+    timeout: 10000  # ms
+    channels: [1, 3, 5, 7]  # 你原来使用的通道
+    # 默认设置
+    defaults:
+      voltage_limit: 30.0
+      current_limit: 5.0
+
+  # 可扩展其他仪器，例如示波器、万用表等
+  # multimeter:
+  #   type: multimeter
+  #   resource: "USB0::0x2A8D::0x1301::MY12345678::INSTR"
+  #   timeout: 5000
+
+# 全局模式：real 或 simulation
+mode: simulation  # 默认使用仿真，方便无硬件时测试

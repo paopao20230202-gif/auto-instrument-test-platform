@@ -2,10 +2,14 @@
 
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
+from pathlib import Path
 import pyvisa
 from rich.console import Console
 
 console = Console()
+
+# 项目根目录下的仿真定义
+SIM_YAML = Path(__file__).resolve().parents[2] / "sim" / "power_supply.yaml"
 
 
 class InstrumentBase(ABC):
@@ -31,11 +35,18 @@ class InstrumentBase(ABC):
         if self._connected:
             return
         try:
-            # 仿真模式使用 @sim 后端
             if self.sim_mode:
-                self._rm = pyvisa.ResourceManager("@sim")
+                # 使用自定义仿真 YAML（如果存在）
+                if SIM_YAML.exists():
+                    # pyvisa-sim 支持 path@sim 语法
+                    backend = f"{SIM_YAML}@sim"
+                    self._rm = pyvisa.ResourceManager(backend)
+                    console.print(f"  [dim]使用仿真定义: {SIM_YAML.name}[/dim]")
+                else:
+                    self._rm = pyvisa.ResourceManager("@sim")
             else:
                 self._rm = pyvisa.ResourceManager()
+
             self._inst = self._rm.open_resource(self.resource)
             self._inst.timeout = self.timeout
             self._connected = True

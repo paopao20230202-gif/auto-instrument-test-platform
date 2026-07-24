@@ -1,0 +1,56 @@
+# pyvisa-sim 仿真仪器定义
+# 用于无真实硬件时本地测试平台功能
+
+spec: "1.0"
+devices:
+  PowerSupplySim:
+    eom:
+      ASRL INSTR:
+        q: "\n"
+        r: "\n"
+    error: ERROR
+    dialogues:
+      - q: "*IDN?"
+        r: "Simulated Power Supply, Model PS-1000, SN123456, 1.0"
+      - q: "SYST:REM"
+        r: ""
+      - q: "INST:SEL CH1"
+        r: ""
+      - q: "INST:SEL CH3"
+        r: ""
+      - q: "INST:SEL CH5"
+        r: ""
+      - q: "INST:SEL CH7"
+        r: ""
+      - q: "MEAS:VOLT? CH1"
+        r: "12.345"
+      - q: "MEAS:VOLT? CH3"
+        r: "5.012"
+      - q: "MEAS:VOLT? CH5"
+        r: "24.000"
+      - q: "MEAS:VOLT? CH7"
+        r: "3.300"
+      - q: "MEAS:VOLT?"
+        r: "12.345"
+      - q: "MEAS:CURR? CH1"
+        r: "0.521"
+      - q: "MEAS:CURR? CH3"
+        r: "1.023"
+      - q: "MEAS:CURR? CH5"
+        r: "0.100"
+      - q: "MEAS:CURR? CH7"
+        r: "0.050"
+      - q: "MEAS:CURR?"
+        r: "0.521"
+      - q: "OUTP ON"
+        r: ""
+      - q: "OUTP OFF"
+        r: ""
+      - q: "VOLT ?"
+        r: "12.000"
+      - q: "CURR ?"
+        r: "1.000"
+
+resources:
+  ASRL1::INSTR:
+    device: PowerSupplySim
